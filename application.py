@@ -34,7 +34,7 @@ def login():
             return render_template("login.html")
         else:
             flash('Already Logged In')
-            return redirect('game')
+            return redirect('main')
 
     elif request.method == "POST":
         # Get form information
