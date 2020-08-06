@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Elevation Profile
+{% endblock %}
+
+{% block content %}
+<!-- {{te}} -->
+<h3>Elevation Profile</h3>
+<!-- Login Form -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Showing Elevation Along a Path</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <script src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-VSEuHsarXx8G0zbmtSQPN3ReIaZfGOc&callback=initMap&libraries=&v=weekly" defer></script>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</head>
+
+<body>
+  <div>
+    <div>
+      <input type="text" class="site_a" id="lat_a" name="lat_a" value="" placeholder="A_latitude">
+      <input type="text" class="site_a" id="lng_a" name="lng_a" value="" placeholder="A_longitude">
+    </div>
+    <div>
+      <input type="text" class="site_b" id="lat_b" name="lat_b" value="" placeholder="B_latitude">
+      <input type="text" class="site_b" id="lng_b" name="lng_b" value="" placeholder="B_longitude">
+    </div>
+    <button type="button" id="btn_generate">Generate</button>
+    <div id="map" style="height:250px;"></div>
+    <div id="elevation_chart"></div>
+  </div>
+</body>
+
+</html>
+{% endblock %}
