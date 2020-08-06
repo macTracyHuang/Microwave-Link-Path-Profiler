@@ -44,7 +44,7 @@ def login():
             flash("Invalid password")
             return render_template("login.html")
         session['id'] = "admin"
-        return redirect('/')
+        return render_template('main.html')
 
 
 def load_data(filename):
