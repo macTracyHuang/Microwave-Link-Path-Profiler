@@ -29,13 +29,8 @@ def index():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
-        if session.get("id") is None:
-            flash('Please log in')
-            return render_template("login.html")
-        else:
-            flash('Already Logged In')
-            return render_template('main.html')
-
+        flash('Please log in')
+        return render_template("login.html")
     elif request.method == "POST":
         # Get form information
         password = request.form.get("password")
