@@ -9,7 +9,7 @@ from functools import wraps
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = secrets.token_urlsafe(16)
-app.config['PERMANENT_SESSION_LIFETIME'] = 2
+app.config['SESSION_PERMANENT'] = True
 
 
 def login_required(f):
@@ -45,7 +45,6 @@ def login():
             flash("Invalid password")
             return render_template("login.html")
         session['id'] = "admin"
-        session.permanent = True
         return redirect('/')
 
 
