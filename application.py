@@ -1,24 +1,38 @@
-from flask import render_template, Flask, redirect, request,\
-    session, flash
+from flask import render_template, Flask, request,\
+    flash, abort, url_for, redirect
 from elevation import getElevation
 import secrets
 import csv
 import math
-from functools import wraps
+from flask_login import LoginManager,\
+ login_required, login_user, UserMixin
+from urllib.parse import urlparse, urljoin
 
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = secrets.token_urlsafe(16)
 app.config['SESSION_PERMANENT'] = True
+login_manager = LoginManager()
+login_manager.login_view = 'login'
+login_manager.init_app(app)
 
 
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if session.get("id") is None:
-            return redirect("/login")
-        return f(*args, **kwargs)
-    return decorated_function
+class User(UserMixin):
+    pass
+
+
+def is_safe_url(target):
+    ref_url = urlparse(request.host_url)
+    test_url = urlparse(urljoin(request.host_url, target))
+    return test_url.scheme in ('http', 'https') and \
+        ref_url.netloc == test_url.netloc
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    user = User()
+    user.id = user_id
+    return user
 
 
 @app.route("/")
@@ -27,25 +41,25 @@ def index():
     return render_template('main.html')
 
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == "GET":
-        if session.get("id") is None:
-            flash('Please log in')
-            return render_template("login.html")
-        else:
-            flash('Already Logged In')
-            return redirect('/')
+    if request.method == 'GET':
+        return render_template('login.html')
+    elif request.method == 'POST':
+        if request.form.get('password') == '0380':
+            # Login and validate the user.
+            user = User()
+            user.id = 'admin'
+            login_user(user)
+            flash('登入成功')
 
-    elif request.method == "POST":
-        # Get form information
-        password = request.form.get("password")
-        # check input is valid
-        if password != "0380":
-            flash("Invalid password")
-            return render_template("login.html")
-        session['id'] = "admin"
-        return redirect('/')
+            next = request.args.get('next')
+            if not is_safe_url(next):
+                return abort(400)
+            return redirect(next or url_for('index'))
+        else:
+            flash('密碼錯誤')
+            return render_template('login.html')
 
 
 def load_data(filename):

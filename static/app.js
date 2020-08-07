@@ -23,7 +23,7 @@ function initMap() {
   // Create an ElevationService.
   const elevator = new google.maps.ElevationService();
   // Draw the path, using the Visualization API and the Elevation service.
-  displayPathElevation(path, elevator, map);
+  // displayPathElevation(path, elevator, map);
   document.querySelector("#btn_generate").onclick = () =>{
     let lat_a = parseFloat(document.querySelector("#lat_a").value)
     let lng_a = parseFloat(document.querySelector("#lng_a").value)
