@@ -23,7 +23,6 @@ def getChart(chartData, chartDataScaling="-500,5000", chartType="lc",
     chart_args['chd'] = dataString.strip(',')
 
     chartUrl = CHART_BASE_URL + '?' + urllib.parse.urlencode(chart_args)
-    print(chartUrl)
 
 
 def getElevation(path,
@@ -32,7 +31,6 @@ def getElevation(path,
                        'key': "AIzaSyC-VSEuHsarXx8G0zbmtSQPN3ReIaZfGOc"})
 
     url = ELEVATION_BASE_URL + '?' + urllib.parse.urlencode(elvtn_args)
-    print(url)
     response = simplejson.load(urllib.request.urlopen(url))
 
     # Create a dictionary for each results[] object

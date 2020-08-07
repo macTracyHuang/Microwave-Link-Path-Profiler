@@ -104,6 +104,7 @@ function plotElevation(elevations, status) {
   // Draw the chart using the data within its DIV.
   chart.draw(data, {
     hAxis: {title: "distance(km): ".concat(d)},
+    color:'blue',
     height: 150,
     legend: "none",
     trendlines: { 1:{
