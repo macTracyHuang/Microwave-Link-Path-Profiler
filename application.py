@@ -50,7 +50,7 @@ def login():
             # Login and validate the user.
             user = User()
             user.id = 'admin'
-            login_user(user)
+            login_user(user, True)
             flash('登入成功')
 
             next = request.args.get('next')
