@@ -29,9 +29,14 @@ function initMap() {
     let lng_a = parseFloat(document.querySelector("#lng_a").value)
     let lat_b = parseFloat(document.querySelector("#lat_b").value)
     let lng_b = parseFloat(document.querySelector("#lng_b").value)
-    const newpath = [{lat: lat_a,lng: lng_a}, {lat: lat_b,lng: lng_b}]
-    // document.querySelector("#elevation_chart").innerHTML = ""
-    displayPathElevation(newpath, elevator, map);
+    if (isNaN(lat_a)||isNaN(lng_a)||isNaN(lat_b)||isNaN(lng_b)){
+      alert("請輸入經緯度")
+    }
+    else{
+      const newpath = [{lat: lat_a,lng: lng_a}, {lat: lat_b,lng: lng_b}]
+      // document.querySelector("#elevation_chart").innerHTML = ""
+      displayPathElevation(newpath, elevator, map);
+    }
   }
 }
 
@@ -67,7 +72,13 @@ function displayPathElevation(path, elevator, map) {
 // and plots the elevation profile on a Visualization API ColumnChart.
 function plotElevation(elevations, status) {
   const chartDiv = document.getElementById("elevation_chart");
+  let h1 = parseFloat(document.querySelector("#height_a").value)
+  let h2 = parseFloat(document.querySelector("#height_b").value)
 
+  let height_a = isNaN(h1)?  0:h1
+  console.log(isNaN(h1))
+  let height_b = isNaN(h2)? 0:h2
+  console.log(height_a, height_b)
   if (status !== "OK") {
     // Show the error code inside the chartDiv.
     chartDiv.innerHTML =
@@ -87,7 +98,12 @@ function plotElevation(elevations, status) {
 
   for (let i = 0; i < elevations.length; i++) {
     if (i === 0 || i ===(elevations.length-1)){
-      data.addRow([i,null, elevations[i].elevation]);
+      if (i === 0){
+        data.addRow([i,null, elevations[i].elevation+height_a]);
+      }
+      else{
+        data.addRow([i,null, elevations[i].elevation+height_b]);
+      }
       console.log(i)
     }
     else{

@@ -28,7 +28,7 @@ def getChart(chartData, chartDataScaling="-500,5000", chartType="lc",
 def getElevation(path,
                  samples="256", **elvtn_args):
     elvtn_args.update({'path': path, 'samples': samples,
-                       'key': "AIzaSyC-VSEuHsarXx8G0zbmtSQPN3ReIaZfGOc"})
+                       'key': ""})
 
     url = ELEVATION_BASE_URL + '?' + urllib.parse.urlencode(elvtn_args)
     response = simplejson.load(urllib.request.urlopen(url))
