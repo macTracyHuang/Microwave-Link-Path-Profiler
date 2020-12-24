@@ -50,7 +50,7 @@ function displayPathElevation(path, elevator, map) {
   polyline = new google.maps.Polyline({
     path: path,
     strokeColor: "#0000CC",
-    strokeOpacity: 0.4,
+    strokeOpacity: 0.5,
     map: map
   });
 
@@ -86,7 +86,7 @@ function plotElevation(elevations, status) {
     return;
   }
   // Create a new chart in the elevation_chart DIV.
-  const chart = new google.visualization.ColumnChart(chartDiv);
+  const chart = new google.visualization.AreaChart(chartDiv);
   // Extract the data from which to populate the chart.
   // Because the samples are equidistant, the 'Sample'
   // column here does double duty as distance along the
@@ -120,7 +120,7 @@ function plotElevation(elevations, status) {
   // Draw the chart using the data within its DIV.
   chart.draw(data, {
     hAxis: {title: "distance(km): ".concat(d)},
-    color:'blue',
+    color:'black',
     height: 150,
     legend: "none",
     trendlines: { 1:{
